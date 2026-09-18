@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "name": "web-dashboard",
+  "layer": "ui/frontend",
+  "purpose": "Vanilla progressive web app and tactile operator console",
+  "above": {
+    "name": "enterprise-monorepo",
+    "path": "../../",
+    "invariants": ["Zero disk secrets"]
+  },
+  "invariants": [
+    "No bloated frontend frameworks: vanilla ES modules, HTML5, and CSS variables",
+    "All WebSocket/SSE streams must handle auto-reconnect with exponential backoff"
+  ],
+  "exports": [
+    "web/index.html",
+    "web/app.js"
+  ]
+}

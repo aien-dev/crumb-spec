@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "name": "enterprise-monorepo",
+  "layer": "root",
+  "purpose": "Enterprise distributed cloud mesh and agent swarm infrastructure",
+  "below": [
+    { "name": "crates/core", "role": "Foundational native types, cryptography, and protocols" },
+    { "name": "crates/services", "role": "Microservices runtime daemons and HTTP gateways" },
+    { "name": "web/dashboard", "role": "Universal progressive web application and operator interface" }
+  ],
+  "invariants": [
+    "Zero disk secrets: all API keys must resolve dynamically from hardware TPM",
+    "All service communications must use mTLS or sovereign Unix domain sockets",
+    "Strict unslop standard: zero marketing fluff or conversational filler in commit messages"
+  ],
+  "exports": [
+    "cargo build --workspace",
+    "cargo test --workspace"
+  ]
+}
