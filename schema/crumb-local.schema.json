@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/aien-dev/crumb-spec/main/schema/crumb-local.schema.json",
+  "title": "LocalCrumbData",
+  "description": "Ephemeral real-time operational scent and agent coordination manifest.",
+  "type": "object",
+  "required": ["schema_version", "directory"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "directory": {
+      "type": "string",
+      "description": "Relative or canonical path of the current directory."
+    },
+    "active_scents": {
+      "type": "object",
+      "description": "Map of agent identifiers to their current focus and TTL.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["focus", "updated_at", "ttl_seconds"],
+        "properties": {
+          "focus": { "type": "string" },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "ttl_seconds": { "type": "integer", "minimum": 0 },
+          "metadata": { "type": "object" }
+        }
+      }
+    },
+    "locks": {
+      "type": "object",
+      "description": "Advisory claims indicating active mutation.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["holder", "intent", "acquired_at"],
+        "properties": {
+          "holder": { "type": "string" },
+          "intent": { "type": "string" },
+          "acquired_at": { "type": "string", "format": "date-time" },
+          "ttl_seconds": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "whispers": {
+      "type": "array",
+      "description": "Asynchronous inter-agent messages and handoff notes.",
+      "items": {
+        "type": "object",
+        "required": ["from", "message", "timestamp"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "message": { "type": "string" },
+          "target_file": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "priority": { "type": "string", "enum": ["low", "normal", "high", "critical"] }
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "description": "Rolling log of recent actions and intent vectors.",
+      "items": {
+        "type": "object",
+        "required": ["agent", "action", "target", "intent", "vector", "timestamp"],
+        "properties": {
+          "agent": { "type": "string" },
+          "action": { "type": "string" },
+          "target": { "type": "string" },
+          "intent": { "type": "string" },
+          "vector": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Arbitrary vendor or domain-specific metadata.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

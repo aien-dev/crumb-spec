@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/aien-dev/crumb-spec/main/schema/crumb.schema.json",
+  "title": "DirCrumb",
+  "description": "Durable architectural metadata manifest for a codebase directory.",
+  "type": "object",
+  "required": ["schema_version", "name", "purpose"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable identifier for the module or directory."
+    },
+    "layer": {
+      "type": "string",
+      "description": "Architectural layer identifier (e.g. core/runtime, ui/web, infra/db)."
+    },
+    "purpose": {
+      "type": "string",
+      "description": "Concise summary of directory responsibilities and scope."
+    },
+    "above": {
+      "description": "Pointer to parent architectural domain or repository root.",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "required": ["name", "path"],
+          "properties": {
+            "name": { "type": "string" },
+            "path": { "type": "string" },
+            "invariants": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      ]
+    },
+    "below": {
+      "type": "array",
+      "description": "List of notable child components and their roles.",
+      "items": {
+        "type": "object",
+        "required": ["name", "role"],
+        "properties": {
+          "name": { "type": "string" },
+          "role": { "type": "string" }
+        }
+      }
+    },
+    "invariants": {
+      "type": "array",
+      "description": "Non-negotiable architectural rules enforced within this directory.",
+      "items": { "type": "string" }
+    },
+    "exports": {
+      "type": "array",
+      "description": "Key public functions, crates, modules, or services provided.",
+      "items": { "type": "string" }
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Arbitrary vendor or domain-specific metadata.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
