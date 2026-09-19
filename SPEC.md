@@ -181,3 +181,39 @@ When opening `.crumb.local`:
 ## 7. Extensibility and Dialects
 
 Vendors, open-source communities, and agent teams MAY add custom fields under the top-level `extensions` object or introduce custom sub-objects prefixed with `x_`. Implementations conforming to RFC-0001 MUST preserve unrecognized extension fields during read-modify-write cycles.
+
+---
+
+## 8. Cryptographic Action Ledger and Hash Chaining
+
+### 8.1 Purpose and Invariants
+The Crumb Ledger provides an immutable, cryptographically verifiable record of operational action vectors executed across repositories by autonomous agents. Each event seals the physical mutation or audit with BLAKE3 cryptographic hashes, forming an unbroken tamper-evident hash chain.
+
+Key Invariants:
+1. **Cryptographic Chaining**: Every event commits to the hash of its immediate predecessor (`parent_hash`). Modifying any historical event invalidates all downstream hashes.
+2. **Genesis Anchor**: The initial event (`index: 0`) must have a `parent_hash` of 32 zero bytes (`[0u8; 32]`).
+3. **Chronological Sequencing**: Event timestamps must be strictly monotonic (`timestamp >= parent.timestamp`). Backdated events must be rejected.
+4. **Sequential Indexing**: Event indices must advance strictly by 1 (`index == parent.index + 1`). Missing parents or index gaps trigger immediate verification failure.
+5. **Dual Canonical Formats**: Conforming implementations must support lossless round-trip serialization across canonical JSON and deterministic binary formats.
+
+### 8.2 Event Schema
+
+```typescript
+interface LedgerEvent {
+  index: number;
+  timestamp: number; // Unix epoch seconds
+  agent: string;
+  action: "create" | "modify" | "delete" | "audit" | "test" | "build" | string;
+  target: string;
+  intent: string;
+  payload_hash: string; // 32-byte BLAKE3 hex or raw byte array
+  parent_hash: string;  // Preceding event hash or 32 zero bytes for genesis
+  hash: string;         // Sealed BLAKE3 event hash
+}
+```
+
+### 8.3 Hash Computation
+The event hash seals the canonical tuple:
+`BLAKE3("CRUMB_LEDGER_EVENT_V1" || index || timestamp || agent || action || target || intent || payload_hash || parent_hash)`.
+Any modification to intent, target, payload, or predecessor breaks chain verification.
+
