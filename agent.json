@@ -1,0 +1,16 @@
+{
+  "$schema": "https://aien.org/schemas/agent-v1.json",
+  "name": "crumb-spec",
+  "version": "1.0.0",
+  "description": "The Crumb Protocol: Spatial Grounding, Architectural Topography, and Ephemeral Scent Specification for Autonomous AI Agents",
+  "repository": "https://github.com/aien-dev/crumb-spec",
+  "license": "Apache-2.0 WITH LLVM-exception",
+  "architecture": [
+    "x86_64",
+    "aarch64-grace-blackwell"
+  ],
+  "conventions": {
+    "mandatory_branching": true,
+    "zero_em_dashes": true
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "name": "auth-service",
+  "layer": "services/auth",
+  "purpose": "JWT token verification, OAuth2 exchange, and session revocation",
+  "above": {
+    "name": "platform-core",
+    "path": "../../",
+    "invariants": [
+      "Zero disk secrets: hardware TPM vault only",
+      "Pure compiled architecture"
+    ]
+  },
+  "below": [
+    { "name": "routes", "role": "HTTP endpoint handlers for login and refresh" },
+    { "name": "crypto", "role": "Ed25519 signing and verification primitives" }
+  ],
+  "invariants": [
+    "Tokens must be signed with Ed25519, never HMAC-SHA256",
+    "All authentication routes must enforce rate limiting"
+  ],
+  "exports": [
+    "auth_service::verify_bearer_token",
+    "auth_service::issue_session_token"
+  ]
+}

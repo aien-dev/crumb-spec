@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "name": "services-backend",
+  "layer": "services/runtime",
+  "purpose": "High-throughput asynchronous microservices engine and SQLite WAL storage",
+  "above": {
+    "name": "enterprise-monorepo",
+    "path": "../../",
+    "invariants": ["Zero disk secrets: hardware TPM vault only"]
+  },
+  "below": [
+    { "name": "api", "role": "Axum REST and SSE streaming endpoints" },
+    { "name": "storage", "role": "Local persistent database and event logs" }
+  ],
+  "invariants": [
+    "Pure compiled native Rust: zero Node or Python daemons",
+    "All public routes must be authenticated before dispatch"
+  ],
+  "exports": [
+    "services_backend::server::start_daemon"
+  ]
+}
