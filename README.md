@@ -136,7 +136,7 @@ The Crumb Protocol is intentionally simple and dependency-free. You do not need 
 
 - **Any language can parse it**: It is standard JSON.
 - **Reference Clients**: See [examples/reference-clients/](examples/reference-clients/) for zero-dependency Python, TypeScript, Shell, and Rust implementations.
-- **CLI Tooling**: An ultra-fast native Rust implementation is available at [spark-crumbs](https://github.com/aien-dev/spark-crumbs).
+- **CLI Tooling**: A compiled native Rust implementation is available at [spark-crumbs](https://github.com/aien-dev/spark-crumbs).
 - **Custom Extensions**: Teams can add custom keys under `extensions` or create new dialects. See [EXTENDING.md](EXTENDING.md).
 
 ---
