@@ -3,7 +3,7 @@ name = "crumb-spec"
 version = "1.0.0"
 edition = "2021"
 license = "Apache-2.0 WITH LLVM-exception"
-authors = ["AIEN Sovereign Systems & Contributors <sovereign@aien.dev>"]
+authors = ["Drake Stapleton <drake.aien@proton.me>"]
 description = "Crumb Protocol specification, cryptographic ledger, and verification test suite"
 repository = "https://github.com/aien-dev/crumb-spec"
 
