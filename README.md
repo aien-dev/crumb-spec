@@ -1,3 +1,7 @@
+> Archived: this repository is no longer authoritative. Spec content lives with https://github.com/aien-dev/aien-sovereign-core/tree/main/crates/spark-crumbs and core docs.
+>
+> History is preserved read-only. Open new work against the canonical home.
+
 # The Crumb Protocol (RFC-0001)
 
 An open, vendor-neutral filesystem standard for autonomous AI agent spatial grounding, architectural memory, and peer pheromone coordination.
